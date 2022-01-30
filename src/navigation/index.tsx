@@ -12,12 +12,20 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import FavorisScreen from '../screens/FavorisScreen';
+import ProfilScreen from '../screens/ProfilScreen';
+import ScanScreen from '../screens/ScanScreen';
+import JournalScreen from '../screens/JournalScreen';
+import RechercheScreen from '../screens/RechercheScreen';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -40,9 +48,6 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -58,40 +63,60 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Scan"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
+        <BottomTab.Screen
+            name="Favoris"
+            component={FavorisScreen}
+            options={{
+                tabBarLabel: 'Favoris',
+                tabBarIcon: ({color, size }) => (
+                    <MaterialIcons name="favorite" color={color} size={size}/>
+                ),
+            }}
+        />
+        <BottomTab.Screen
+            name="Profil"
+            component={ProfilScreen}
+            options={{
+                tabBarLabel: 'Profil',
+                tabBarIcon: ({color, size }) => (
+                    <Feather name="user" color={color} size={size}/>
+                ),
+            }}
+        />
+        <BottomTab.Screen
+            name="Scan"
+            component={ScanScreen}
+            options={{
+                tabBarLabel: 'Scan',
+                tabBarIcon: ({color, size }) => (
+                    <MaterialCommunityIcons name="barcode-scan" color={color} size={size}/>
+                ),
+            }}
+        />
+        <BottomTab.Screen
+            name="Journal"
+            component={JournalScreen}
+            options={{
+                tabBarLabel: 'Journal',
+                tabBarIcon: ({color, size }) => (
+                    <MaterialCommunityIcons name="coffee-outline" color={color} size={size}/>
+                ),
+            }}
+        />
+        <BottomTab.Screen
+            name="Recherche"
+            component={RechercheScreen}
+            options={{
+                tabBarLabel: 'Recherche',
+                tabBarIcon: ({color, size }) => (
+                    <IonIcon name="search-outline" color={color} size={size}/>
+                ),
+            }}
+        />
     </BottomTab.Navigator>
   );
 }
