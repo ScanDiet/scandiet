@@ -10,30 +10,30 @@ function AgePage({ route, navigation }){
     function countNbCalories(){
         if(genre === "isMaleSelected") {
             if(activityLevel === "isSedentaireSelected"){
-                return Math.round(weight * 10 + height * 6.25 - age * 5 + 5);
+                return Math.round(weight * 10 + height * 6.25 - number * 5 + 5);
             }
             else if(activityLevel === "isFaiblementActifSelected"){
-                return Math.round((weight * 10 + height * 6.25 - age * 5 + 5)*1.2);
+                return Math.round((weight * 10 + height * 6.25 - number * 5 + 5)*1.2);
             }
             else if(activityLevel === "isActifSelected"){
-                return Math.round((weight * 10 + height * 6.25 - age * 5 + 5)*1.55);
+                return Math.round((weight * 10 + height * 6.25 - number * 5 + 5)*1.55);
             }
             else{
-                return Math.round((weight * 10 + height * 6.25 - age * 5 + 5)*1.725);
+                return Math.round((weight * 10 + height * 6.25 - number * 5 + 5)*1.725);
             }
         }
         else{
             if(activityLevel === "isSedentaireSelected"){
-                return Math.round(weight * 10 + height * 6.25 - age * 5 - 161);
+                return Math.round(weight * 10 + height * 6.25 - number * 5 - 161);
             }
             else if(activityLevel === "isFaiblementActifSelected"){
-                return Math.round((weight * 10 + height * 6.25 - age * 5 - 161)*1.2);
+                return Math.round((weight * 10 + height * 6.25 - number * 5 - 161)*1.2);
             }
             else if(activityLevel === "isActifSelected"){
-                return Math.round((weight * 10 + height * 6.25 - age * 5 - 161)*1.55);
+                return Math.round((weight * 10 + height * 6.25 - number * 5 - 161)*1.55);
             }
             else{
-                return Math.round((weight * 10 + height * 6.25 - age * 5 - 161)*1.725);
+                return Math.round((weight * 10 + height * 6.25 - number * 5 - 161)*1.725);
             }
         }
     }

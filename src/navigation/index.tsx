@@ -12,7 +12,6 @@ import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import FavorisScreen from '../screens/FavorisScreen';
@@ -72,7 +71,6 @@ function RootNavigator() {
         <Stack.Screen name="ActivityLevelPage" component={ActivityLevelPage} />
         <Stack.Screen name="AgePage" component={AgePage} />
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="Product" component={ProductScreen} />
         </Stack.Group>
