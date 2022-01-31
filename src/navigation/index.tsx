@@ -29,6 +29,12 @@ import IonIcon from 'react-native-vector-icons/Ionicons';
 // @ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
 import ProductScreen from "../components/Product";
+import StartPage from "../screens/inscription/StartPage";
+import GenrePage from "../screens/inscription/GenrePage";
+import WeightPage from "../screens/inscription/WeightPage";
+import ActivityLevelPage from "../screens/inscription/ActivityLevelPage";
+import AgePage from "../screens/inscription/AgePage";
+import HeightPage from "../screens/inscription/HeightPage";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -48,8 +54,24 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+    <Stack.Navigator
+        screenOptions={{
+            headerTitle: "",
+            headerStyle: {
+                backgroundColor: 'green',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        }}>
+        <Stack.Screen name="StartPage" component={StartPage} />
+        <Stack.Screen name="GenrePage" component={GenrePage} />
+        <Stack.Screen name="WeightPage" component={WeightPage} />
+        <Stack.Screen name="HeightPage" component={HeightPage} />
+        <Stack.Screen name="ActivityLevelPage" component={ActivityLevelPage} />
+        <Stack.Screen name="AgePage" component={AgePage} />
+        <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
         <Stack.Group screenOptions={{ presentation: 'modal' }}>
             <Stack.Screen name="Product" component={ProductScreen} />
