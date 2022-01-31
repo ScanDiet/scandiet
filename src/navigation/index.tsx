@@ -13,19 +13,22 @@ import { ColorSchemeName, Pressable } from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import FavorisScreen from '../screens/FavorisScreen';
 import ProfilScreen from '../screens/ProfilScreen';
 import ScanScreen from '../screens/ScanScreen';
 import JournalScreen from '../screens/JournalScreen';
 import RechercheScreen from '../screens/RechercheScreen';
+// @ts-ignore
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// @ts-ignore
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// @ts-ignore
 import IonIcon from 'react-native-vector-icons/Ionicons';
+// @ts-ignore
 import Feather from 'react-native-vector-icons/Feather';
+import ProductScreen from "../components/Product";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -48,6 +51,9 @@ function RootNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+            <Stack.Screen name="Product" component={ProductScreen} />
+        </Stack.Group>
     </Stack.Navigator>
   );
 }
@@ -71,7 +77,7 @@ function BottomTabNavigator() {
             name="Favoris"
             component={FavorisScreen}
             options={{
-                tabBarLabel: 'Favoris',
+                title: 'Favoris',
                 tabBarIcon: ({color, size }) => (
                     <MaterialIcons name="favorite" color={color} size={size}/>
                 ),
@@ -81,7 +87,7 @@ function BottomTabNavigator() {
             name="Profil"
             component={ProfilScreen}
             options={{
-                tabBarLabel: 'Profil',
+                title: 'Profil',
                 tabBarIcon: ({color, size }) => (
                     <Feather name="user" color={color} size={size}/>
                 ),
@@ -90,18 +96,18 @@ function BottomTabNavigator() {
         <BottomTab.Screen
             name="Scan"
             component={ScanScreen}
-            options={{
-                tabBarLabel: 'Scan',
+            options={({ navigation }: RootTabScreenProps<'Scan'>) => ({
+                title: 'Scan',
                 tabBarIcon: ({color, size }) => (
                     <MaterialCommunityIcons name="barcode-scan" color={color} size={size}/>
-                ),
-            }}
+                )
+            })}
         />
         <BottomTab.Screen
             name="Journal"
             component={JournalScreen}
             options={{
-                tabBarLabel: 'Journal',
+                title: 'Journal',
                 tabBarIcon: ({color, size }) => (
                     <MaterialCommunityIcons name="coffee-outline" color={color} size={size}/>
                 ),
@@ -111,7 +117,7 @@ function BottomTabNavigator() {
             name="Recherche"
             component={RechercheScreen}
             options={{
-                tabBarLabel: 'Recherche',
+                title: 'Recherche',
                 tabBarIcon: ({color, size }) => (
                     <IonIcon name="search-outline" color={color} size={size}/>
                 ),
