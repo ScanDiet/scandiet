@@ -14,6 +14,7 @@ declare global {
 }
 
 export type RootStackParamList = {
+  WelcomeScreen: undefined;
   StartPage: undefined;
   GenrePage: undefined;
   WeightPage: undefined;

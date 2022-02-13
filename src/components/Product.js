@@ -2,16 +2,21 @@ import React, {Component} from "react";
 import {View, Text} from "./Themed";
 import Loader from './common/Loader'
 import {StatusBar} from "expo-status-bar";
-import {Platform, ScrollView, Image, StyleSheet} from "react-native";
+import {Platform, ScrollView, Image, StyleSheet, Button, TouchableHighlight, Alert} from "react-native";
+import {Picker} from "@react-native-picker/picker"
 import ErrorScreen from "./common/Error";
+import Dialog from "react-native-dialog";
 import {getProductInfoFromApi, parseProductInfo} from "../api/offApi";
 class ProductScreen extends Component {
-    constructor(props) {
+
+        constructor(props) {
         super(props);
         this.state = {
             product: undefined,
             isLoading: true,
             isConnected: true,
+            visible: false,
+            selectedValue: ""
         }
     }
 
@@ -31,6 +36,20 @@ class ProductScreen extends Component {
                 this.setState({isConnected: false, isLoading: false})
             );
     }
+
+    _showDialog = () => {
+         this.setState({
+             visible: true
+             }
+         )
+    };
+
+    _handleCancel = () => {
+        this.setState({
+                visible: false
+            }
+        )
+    };
 
     static _parseIngredientWithAllergens(ingredientsWithAllergens) {
         if (!ingredientsWithAllergens) {
@@ -77,6 +96,13 @@ class ProductScreen extends Component {
         }
     }
 
+    _setSelectedValue(itemValue) {
+        this.setState({
+                selectedValue: itemValue
+            }
+        )
+    }
+
     _displayProductInfo() {
 
         const {product, isLoading, isConnected} = this.state;
@@ -115,6 +141,38 @@ class ProductScreen extends Component {
                         {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
 
                         {ProductScreen._parseAllergens(product.allergens)}
+
+                        <View style={styles.bottomView}>
+                            <TouchableHighlight>
+                                <View style={styles.button}>
+                                    <Text style={styles.buttonLabel}>Annuler</Text>
+                                </View>
+                            </TouchableHighlight>
+
+                            <TouchableHighlight onPress={this._showDialog}>
+                                <View style={styles.button}>
+                                    <Text style={styles.buttonLabel}>Enregistrer</Text>
+                                </View>
+                            </TouchableHighlight>
+                        </View>
+
+                        <Dialog.Container visible={this.state.visible}>
+
+                            <Dialog.Title>Ajout de produit</Dialog.Title>
+                            <Text style={styles.dialogLabel}> Entrer la quantité </Text>
+                            <Dialog.Input placeholder="Quantité (g)"/>
+                            <Picker
+                                style={styles.picker}
+                                selectedValue={this.state.selectedValue}
+                                onValueChange={(itemValue, itemIndex) => this._setSelectedValue(itemValue)}
+                            >
+                                <Picker.Item label="Petit Déjeuner" value="java" />
+                                <Picker.Item label="Déjeuner" value="js" />
+                                <Picker.Item label="Dîner" value="js" />
+                            </Picker>
+                            <Dialog.Button label="Annuler" onPress={this._handleCancel}/>
+                            <Dialog.Button label="Valider" onPress={this._handleCancel}/>
+                        </Dialog.Container>
 
 
                     </ScrollView>
@@ -220,6 +278,33 @@ const styles = StyleSheet.create({
         borderTopColor: '#d8d8d8',
         borderTopWidth: 1,
     },
+    button: {
+        paddingHorizontal: 8,
+        paddingVertical: 6,
+        borderRadius: 4,
+        backgroundColor: "green",
+        alignSelf: "flex-start",
+        marginHorizontal: "1%",
+        marginBottom: 6,
+        minWidth: "48%",
+        textAlign: "center",
+    },
+    buttonLabel: {
+        fontSize: 12,
+        fontWeight: "500",
+        color: "white",
+    },
+    bottomView: {
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    dialogLabel: {
+        margin: 13,
+        marginLeft: 20
+    },
+    picker: {
+
+    }
 });
 
 

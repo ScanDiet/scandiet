@@ -34,6 +34,7 @@ import WeightPage from "../screens/inscription/WeightPage";
 import ActivityLevelPage from "../screens/inscription/ActivityLevelPage";
 import AgePage from "../screens/inscription/AgePage";
 import HeightPage from "../screens/inscription/HeightPage";
+import WelcomeScreen from "../screens/WelcomeScreen";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -64,6 +65,9 @@ function RootNavigator() {
                 fontWeight: 'bold',
             },
         }}>
+        <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} options={{
+            headerShown: false,
+        }}/>
         <Stack.Screen name="StartPage" component={StartPage} />
         <Stack.Screen name="GenrePage" component={GenrePage} />
         <Stack.Screen name="WeightPage" component={WeightPage} />
@@ -71,7 +75,7 @@ function RootNavigator() {
         <Stack.Screen name="ActivityLevelPage" component={ActivityLevelPage} />
         <Stack.Screen name="AgePage" component={AgePage} />
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-        <Stack.Group screenOptions={{ presentation: 'modal' }}>
+        <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
             <Stack.Screen name="Product" component={ProductScreen} />
         </Stack.Group>
     </Stack.Navigator>
