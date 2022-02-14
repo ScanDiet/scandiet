@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Text, View, TouchableHighlight, TextInput, SafeAreaView, StyleSheet} from 'react-native';
+import {Text, View, TouchableHighlight, TextInput, SafeAreaView, StyleSheet, Alert} from 'react-native';
 import PageIndicator from "./PageIndicator";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Data from '../../database/data';
 
 function AgePage({ route, navigation }){
     const { genre, weight, height, activityLevel } = route.params;
@@ -50,7 +51,7 @@ function AgePage({ route, navigation }){
                     textAlign: 'center',
                     margin: 20,
                     fontSize: 25
-                }}>Quel est votre age? </Text>
+                }}>Quel age avez-vous ? </Text>
             <SafeAreaView style={{
                 flexDirection: 'row',
             }}>
@@ -67,10 +68,25 @@ function AgePage({ route, navigation }){
                 }}> ans</Text>
             </SafeAreaView>
             <TouchableHighlight
-                style={{backgroundColor: "green",
-                    padding: 20,
+                style={{
+                    backgroundColor: "green",
+                    marginTop: 20,
+                    paddingVertical: 10,
+                    paddingHorizontal: 40,
+                    borderRadius: 20
                 }}
-                onPress={() => {if(number!== null){navigation.navigate('Root',{valCal: countNbCalories() })}}}>
+                onPress={() => {
+                    if (number === null || number === 0) {
+                        Alert.alert('Oups !', "Nous avons besoin de connaitre votre age afin de calculer vos besoins caloriques");
+                        return;
+                    } else if (number < 18) {
+                        Alert.alert('Information', "Vous avez moins de 18 ans, nous vous conseillons de consulter un spécialiste avant d'entreprendre tout régime alimentaire");
+                    }
+
+                    Data.getInstance().updateUser({ age: number });
+                    
+                    navigation.navigate('Root');
+                }}>
                 <Text
                     style={{color: "white",
                         fontSize: 20}}>

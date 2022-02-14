@@ -1,9 +1,13 @@
-import {Image, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, View, Button} from "react-native";
+import {Image, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, View, Button, Pressable} from "react-native";
 import * as React from "react";
 
 const WelcomeScreen = ({ navigation }) => {
     function navigateToRoot() {
-        navigation.navigate('Root',{valCal: 0 })
+        navigation.navigate('Root', {valCal: 0 })
+    }
+
+    function navigateToCreateAccount() {
+        navigation.navigate('StartPage', {navigation: navigation })
     }
 
     return (
@@ -25,15 +29,12 @@ const WelcomeScreen = ({ navigation }) => {
                 <Text
                     style={styles.iText}
                 >Identifiants oubliés ?</Text>
-                <TouchableHighlight onPress={navigateToRoot}>
-                    <View style={styles.button}>
-                        <Text style={styles.btext}>Se connecter</Text>
-                    </View>
+                <TouchableHighlight style={styles.button} onPress={navigateToRoot}>
+                    <Text style={styles.btext}>Se connecter</Text>
                 </TouchableHighlight>
-                <Text
-                    style={styles.iText}
-                >S'inscrire</Text>
-
+                <Pressable onPress= {navigateToCreateAccount}>
+                    <Text style={styles.sText}>S'inscrire</Text>
+                </Pressable>
             </View>
         </View>
     )
@@ -42,11 +43,14 @@ export default WelcomeScreen;
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 150,
+        paddingTop: 100,
+        backgroundColor: 'white',
+        flexDirection: 'column', 
+        flex: 1
     },
     header: {
         alignItems: "center",
-        marginBottom: 50
+        marginBottom: 20
     },
     body: {
         padding: 20
@@ -71,15 +75,15 @@ const styles = StyleSheet.create({
 
     },
     footer: {
-        margin: 20
+        marginVertical: 20,
+        marginHorizontal: 50
     },
     button: {
         alignItems: "center",
         backgroundColor: "green",
-        padding: 10,
-        marginLeft: 50,
-        marginRight: 50,
-        borderRadius: 19
+        paddingVertical: 10,
+        paddingHorizontal: 40,
+        borderRadius: 20
     },
     btext: {
         color: "white",
@@ -88,7 +92,14 @@ const styles = StyleSheet.create({
     iText: {
         alignSelf: 'center',
         margin: 12,
-        fontSize: 12,
+        fontSize: 13,
         color: "blue"
-    }
+    },
+    sText: {
+        alignSelf: 'center',
+        margin: 12,
+        fontSize: 15,
+        color: "green",
+        fontWeight: 'bold'
+    },
 })

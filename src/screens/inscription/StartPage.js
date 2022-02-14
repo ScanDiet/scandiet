@@ -15,27 +15,51 @@ const StartPage = ({ navigation }) => {
             <PageIndicator numPage="1"/>
             <Text
                 style={{
+                    margin: 20,
                     fontSize: 30,
                     fontWeight: "bold",
                     color: "green"
-                }}>Bienvenue</Text>
+                }}>
+                Bienvenue
+            </Text>
+
             <Text
                 style={{
-                    textAlign: 'center',
-                    margin: 50,
-                    paddingTop: 50,
-                    fontSize: 20
-                }}>Nous avons juste besoin de vous poser quelques questions rapides afin que nous puissions calculer vos calories quotidiennes recommandées et vous aider à atteindre vos objectifs.</Text>
-                <TouchableHighlight
-                style={{backgroundColor: "green",
-                    padding: 20,
-                    bottom: 0
+                    margin: 20,
+                    marginBottom: 50,
+                    fontSize: 22,
+                    fontWeight: "bold",
+                    color: "green",
+                    textAlign: 'center'
+                }}>
+                Scandiet vous aide à gérer vos besoins caloriques journalier et vous permet de scanner vos aliments pour en connaitre le nutriscore !
+            </Text>
+
+            <Text style={{
+                textAlign: 'center',
+                margin: 20,
+                marginBottom: 10,
+                fontSize: 17
+            }}>
+
+                Nous avons besoin de quelques informations pour mieux vous aider à atteindre vos objectifs.
+            </Text>
+
+            <TouchableHighlight
+                style={{
+                    backgroundColor: "green",
+                    paddingVertical: 10,
+                    paddingHorizontal: 40,
+                    borderRadius: 20,
+                    bottom: 0,
+                    margin: 20,
+                    marginHorizontal: 50,
                 }}
                 onPress={() => navigation.navigate('GenrePage')}>
                 <Text
                     style={{color: "white",
                         fontSize: 20}}>
-                    Suivant <FontAwesomeIcon
+                    Commencer <FontAwesomeIcon
                     style={{color: "white",}}
                     icon={ faArrowRight } />
                 </Text>

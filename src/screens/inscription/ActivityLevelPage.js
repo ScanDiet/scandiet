@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {Text, View, TouchableHighlight, StyleSheet} from 'react-native';
+import {Text, View, TouchableHighlight, StyleSheet, Alert} from 'react-native';
 import PageIndicator from "./PageIndicator";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {faArrowRight} from '@fortawesome/free-solid-svg-icons';
-
+import Data from '../../database/data';
 
 class ActivityLevelPage extends React.Component{
     constructor(props) {
@@ -209,9 +209,27 @@ class ActivityLevelPage extends React.Component{
                 <TouchableHighlight
                     style={{
                         backgroundColor: "green",
-                        padding: 20,
+                        marginTop: 20,
+                        paddingVertical: 10,
+                        paddingHorizontal: 40,
+                        borderRadius: 20
                     }}
-                    onPress={() => {if(this.state.isSedentaireSelected || this.state.isFaiblementActifSelected || this.state.isActifSelected || this.state.isSportifSelected){this.props.navigation.navigate('AgePage', {genre:this.props.route.params.genre, weight:this.props.route.params.weight, height:this.props.route.params.height, activityLevel:this.activityLevel})}}}>
+                    onPress={() => {
+                        if (this.state.isSedentaireSelected) {
+                            Data.getInstance().updateUser({ activityLevel: 'sedentary' });
+                        } else if (this.state.isFaiblementActifSelected) {
+                            Data.getInstance().updateUser({ activityLevel: 'lowActive' });
+                        } else if (this.state.isActifSelected) {
+                            Data.getInstance().updateUser({ activityLevel: 'active' });
+                        } else if (this.state.isSportifSelected) {
+                            Data.getInstance().updateUser({ activityLevel: 'sportive' });
+                        } else {
+                            Alert.alert('Oups !', "Veuillez entrer votre niveau d'activité");
+                            return;
+                        }
+
+                        this.props.navigation.navigate('AgePage', {genre:this.props.route.params.genre, weight:this.props.route.params.weight, height:this.props.route.params.height, activityLevel:this.activityLevel})
+                    }}>
                     <Text
                         style={{
                             color: "white",

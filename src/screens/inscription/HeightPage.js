@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Text, View, TouchableHighlight, TextInput, SafeAreaView, StyleSheet} from 'react-native';
+import {Text, View, TouchableHighlight, TextInput, SafeAreaView, StyleSheet, Alert} from 'react-native';
 import PageIndicator from "./PageIndicator";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
@@ -38,9 +38,19 @@ function HeightPage({ route, navigation }){
             </SafeAreaView>
             <TouchableHighlight
                 style={{backgroundColor: "green",
-                    padding: 20,
+                    marginTop: 20,
+                    paddingVertical: 10,
+                    paddingHorizontal: 40,
+                    borderRadius: 20
                 }}
-                onPress={() => {if(number!== null){navigation.navigate('ActivityLevelPage', { genre:genre, weight:weight, height:number})}}}>
+                onPress={() => {
+                    if (number === null || number === 0) {
+                        Alert.alert('Oups !', "Veuillez entrer votre taille");
+                        return;
+                    }
+
+                    navigation.navigate('ActivityLevelPage', { genre:genre, weight:weight, height:number})}
+                }>
                 <Text
                     style={{color: "white",
                         fontSize: 20}}>

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { View, TouchableHighlight, StyleSheet, Text  } from 'react-native';
+import { View, TouchableHighlight, StyleSheet, Text, Alert } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import {faMale, faFemale, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import PageIndicator from "./PageIndicator";
+import Data from '../../database/data';
 
 class GenrePage extends React.Component{
     constructor(props) {
@@ -77,7 +78,7 @@ class GenrePage extends React.Component{
                             margin: 20,
                             fontSize: 25
                         }}>
-                        Quel est votre genre ?</Text>
+                        Quel est votre sexe ?</Text>
                     <TouchableHighlight
                         style={!this.state.isMaleSelected ? styles.btnNormal : styles.btnSelected}
                         onPress={this.pressMale}>
@@ -97,9 +98,25 @@ class GenrePage extends React.Component{
                     <TouchableHighlight
                         style={{
                             backgroundColor: "green",
-                            padding: 20,
+                            paddingVertical: 10,
+                            paddingHorizontal: 40,
+                            bottom: 0,
+                            margin: 20,
+                            borderRadius: 20,
+                            marginHorizontal: 50
                         }}
-                        onPress={() => {if(this.state.isFemaleSelected || this.state.isMaleSelected){this.props.navigation.navigate('WeightPage', {genre:this.genreSelected})}}}>
+                        onPress={() => {
+                            if (this.state.isMaleSelected) {
+                                Data.getInstance().updateUser({ sexe: 'male' });
+                            } else if (this.state.isFemaleSelected) {
+                                Data.getInstance().updateUser({ sexe: 'female' });
+                            } else {
+                                Alert.alert('Oups !', 'Nous avons besoin de connaitre votre sexe biologique afin de déterminer vos besoins caloriques');
+                                return;
+                            }
+
+                            this.props.navigation.navigate('WeightPage', {genre:this.genreSelected})
+                        }}>
                         <Text
                             style={{
                                 color: "white",
