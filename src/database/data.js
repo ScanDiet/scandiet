@@ -38,19 +38,25 @@ export default class Data {
     }
 
     getBaseCalories() {
-        let result = Math.round(weight * 10 + height * 6.25 - number * 5 + this.user.sexe === 'male' ? 5 : -161);
+        let result = Math.round((this.user.weight * 10) + (this.user.height * 6.25) - (this.user.age * 5) + (this.user.sexe === 'male' ? 5 : -161));
 
         switch (this.user.activityLevel) {
             case 'active':
                 result = Math.round(result*1.55);
                 break;
             case 'lowActive':
-                result = Math.round(result*1.2);
+                result = Math.round(result*1.375);
                 break;
             case 'sportive':
                 result = Math.round(result*1.725);
+            case 'sedentary':
+                result = Math.round(result*1.2);
         }
 
         return result;
+    }
+
+    getTodayCalories() {
+        return 0;
     }
 }

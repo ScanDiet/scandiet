@@ -78,7 +78,7 @@ class ActivityLevelPage extends React.Component{
                     <View>
                         <Text style={[styles.titleBtn, {color: this.state.sedentaryColor}]}>Sédentaire</Text>
                         <Text style={{color: this.state.sedentaryColor}}>
-                            Les activités quotidiennes nécessitent un effort minimal comme le repos, le travail de bureau ou la conduite.
+                            Pas d'activité physique en dehors des activités quotidiennes qui nécessitent un effort minimal comme le travail de bureau ou la conduite.
                         </Text>
                     </View>
                 </TouchableHighlight>
@@ -94,7 +94,7 @@ class ActivityLevelPage extends React.Component{
                     <View>
                         <Text style={[styles.titleBtn, {color: this.state.lowActiveColor}]}>Faiblement actif</Text>
                         <Text style={{color: this.state.lowActiveColor}}>
-                            Les activités quotidiennes nécessitent des efforts tels que des périodes de station debout, des travaux ménagers ou des exercices légers.
+                            Activité de faible intensité 1 à 3 fois par semaine ou des efforts tels que des périodes de station debout, des travaux ménagers ou des exercices légers.
                         </Text>
                     </View>
                 </TouchableHighlight>
@@ -110,7 +110,7 @@ class ActivityLevelPage extends React.Component{
                     <View>
                         <Text style={[styles.titleBtn, {color: this.state.activeColor}]}>Actif</Text>
                         <Text style={{color: this.state.activeColor}}>
-                            Les activités quotidiennes nécessitent un effort raisonnable comme la station debout, le travail physique ou l'exercice modéré régulier.
+                            Exercices d'intensité modérée 3 à 5 fois par semaine / Marche 2 à 5 km par jour / Fait entre 9400 pas et 23 500 pas.
                         </Text>
                     </View>
                 </TouchableHighlight>
@@ -126,7 +126,7 @@ class ActivityLevelPage extends React.Component{
                         <View>
                             <Text style={[styles.titleBtn, {color: this.state.sportiveColor}]}>Sportif</Text>
                             <Text style={{color: this.state.sportiveColor}}>
-                                Les activités quotidiennes nécessitent un effort physique tel que des travaux de construction ou un exercice vigoureux régulier.
+                                Exercices de forte intensité 6 fois par semaine / Marche plus de 5 km par jour / Fait plus de 23 500 pas.
                             </Text>
                         </View>
                     </TouchableHighlight>

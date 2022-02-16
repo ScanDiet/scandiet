@@ -13,15 +13,13 @@ const WelcomeScreen = ({ navigation }) => {
             return;
         } 
 
-        if ((Data.getInstance().getUser()).activityLevel === '') {
-            Data.getInstance().updateUser({
-                activityLevel: 'sedentary',
-                age: 25,
-                weight: 80,
-                height: 180,
-                sexe: 'male'
-            });
-        }
+        Data.getInstance().updateUser({
+            activityLevel: 'sedentary',
+            age: 25,
+            weight: 80,
+            height: 180,
+            sexe: 'male'
+        });
         
         navigation.navigate('Root');
     }
