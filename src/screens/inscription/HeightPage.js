@@ -3,9 +3,9 @@ import {Text, View, TouchableHighlight, TextInput, SafeAreaView, StyleSheet, Ale
 import PageIndicator from "./PageIndicator";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Data from '../../database/data';
 
 function HeightPage({ route, navigation }){
-    const { genre, weight } = route.params;
     const [number, onChangeNumber] = React.useState(null);
     return (
         <View
@@ -49,7 +49,9 @@ function HeightPage({ route, navigation }){
                         return;
                     }
 
-                    navigation.navigate('ActivityLevelPage', { genre:genre, weight:weight, height:number})}
+                    Data.getInstance().updateUser({ height: number });
+
+                    navigation.navigate('ActivityLevelPage')}
                 }>
                 <Text
                     style={{color: "white",

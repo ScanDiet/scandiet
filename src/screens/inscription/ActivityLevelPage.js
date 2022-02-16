@@ -9,116 +9,46 @@ class ActivityLevelPage extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            isSedentaireSelected: false,
-            isFaiblementActifSelected: false,
-            isActifSelected: false,
-            isSportifSelected: false,
+            activityLevel: '',
+            sedentaryColor: 'black',
+            lowActiveColor: 'black',
+            activeColor: 'black',
+            sportiveColor: 'black',
         }
     }
 
-    activityLevel = null;
+    levels = ['sedentary', 'lowActive', 'active', 'sportive'];
 
-    colorSedentaire = "black";
-    colorFaiblementActif = "black";
-    colorActif = "black";
-    colorSportif = "black";
+    selectActivityLevel = (level) => {
+        this.setState({
+            activityLevel: level,
+            sedentaryColor: 'black',
+            lowActiveColor: 'black',
+            activeColor: 'black',
+            sportiveColor: 'black',
+        });
 
-    pressSedentaire = ()=> {
-        if (!this.state.isSedentaireSelected) {
-            this.activateSedentaire();
-            this.desactivateFaiblementActif();
-            this.desactivateActif();
-            this.desactivateSportif();
+        switch(level) {
+            case 'sedentary': 
+                this.setState({
+                    sedentaryColor: 'green',
+                });
+                break;
+            case 'lowActive': 
+                this.setState({
+                    lowActiveColor: 'green',
+                });
+                break;
+            case 'active': 
+                this.setState({
+                    activeColor: 'green',
+                });
+                break;
+            case 'sportive': 
+                this.setState({
+                    sportiveColor: 'green',
+                });
         }
-    }
-
-
-    pressFaiblementActif = () => {
-        if(!this.state.isFaiblementActifSelected){
-            this.activateFaiblementActif();
-            this.desactivateSedentaire();
-            this.desactivateActif();
-            this.desactivateSportif();
-        }
-    }
-
-    pressActif = ()=> {
-        if (!this.state.isActifSelected) {
-            this.activateActif();
-            this.desactivateSedentaire();
-            this.desactivateFaiblementActif();
-            this.desactivateSportif();
-        }
-    }
-
-
-    pressSportif = () => {
-        if(!this.state.isSportifSelected){
-            this.activateSportif();
-            this.desactivateSedentaire();
-            this.desactivateFaiblementActif();
-            this.desactivateActif();
-        }
-    }
-
-    activateSedentaire = () => {
-        this.colorSedentaire = "green";
-        this.setState({
-            isSedentaireSelected:  true
-        });
-        this.activityLevel = "isSedentaireSelected";
-    }
-
-    desactivateSedentaire = () => {
-        this.colorSedentaire = "black";
-        this.setState({
-            isSedentaireSelected:  false
-        });
-    }
-
-    activateFaiblementActif = () => {
-        this.colorFaiblementActif = "green";
-        this.setState({
-            isFaiblementActifSelected:  true
-        });
-        this.activityLevel = "isFaiblementActifSelected";
-    }
-
-    desactivateFaiblementActif = () => {
-        this.colorFaiblementActif = "black";
-        this.setState({
-            isFaiblementActifSelected:  false
-        });
-    }
-
-    activateActif = () => {
-        this.colorActif = "green";
-        this.setState({
-            isActifSelected:  true
-        });
-        this.activityLevel = "isActifSelected";
-    }
-
-    desactivateActif = () => {
-        this.colorActif = "black";
-        this.setState({
-            isActifSelected:  false
-        });
-    }
-
-    activateSportif = () => {
-        this.colorSportif = "green";
-        this.setState({
-            isSportifSelected:  true
-        });
-        this.activityLevel = "isSportifSelected";
-    }
-
-    desactivateSportif = () => {
-        this.colorSportif = "black";
-        this.setState({
-            isSportifSelected:  false
-        });
     }
 
     render()  {
@@ -142,16 +72,14 @@ class ActivityLevelPage extends React.Component{
                         flexDirection: 'row'
                     }}>
                 <TouchableHighlight
-                    style={!this.state.isSedentaireSelected ? styles.btnNormal : styles.btnSelected}
-                    onPress={this.pressSedentaire}>
+                    underlayColor="grey"
+                    style={[styles.button, {borderColor: this.state.sedentaryColor}]}
+                    onPress={()=> this.selectActivityLevel(this.levels[0])}>
                     <View>
-                    <Text style={[
-                        styles.titleBtn, {color: this.colorSedentaire}]
-                    }>Sédentaire</Text>
-                    <Text
-                    style={{
-                        color: this.colorSedentaire
-                    }}>Les activités quotidiennes nécessitent un effort minimal comme le repos, le travail de bureau ou la conduite.</Text>
+                        <Text style={[styles.titleBtn, {color: this.state.sedentaryColor}]}>Sédentaire</Text>
+                        <Text style={{color: this.state.sedentaryColor}}>
+                            Les activités quotidiennes nécessitent un effort minimal comme le repos, le travail de bureau ou la conduite.
+                        </Text>
                     </View>
                 </TouchableHighlight>
                 </View>
@@ -160,15 +88,14 @@ class ActivityLevelPage extends React.Component{
                         flexDirection: 'row'
                     }}>
                 <TouchableHighlight
-                    style={!this.state.isFaiblementActifSelected ? styles.btnNormal : styles.btnSelected}
-                    onPress={this.pressFaiblementActif}>
+                underlayColor="grey"
+                    style={[styles.button, {borderColor: this.state.lowActiveColor}]}
+                    onPress={()=> this.selectActivityLevel(this.levels[1])}>
                     <View>
-                    <Text style={[
-                        styles.titleBtn, {color: this.colorFaiblementActif}]}>Faiblement actif</Text>
-                    <Text
-                        style={{
-                            color: this.colorFaiblementActif
-                        }}>Les activités quotidiennes nécessitent des efforts tels que des périodes de station debout, des travaux ménagers ou des exercices légers.</Text>
+                        <Text style={[styles.titleBtn, {color: this.state.lowActiveColor}]}>Faiblement actif</Text>
+                        <Text style={{color: this.state.lowActiveColor}}>
+                            Les activités quotidiennes nécessitent des efforts tels que des périodes de station debout, des travaux ménagers ou des exercices légers.
+                        </Text>
                     </View>
                 </TouchableHighlight>
                 </View>
@@ -177,15 +104,14 @@ class ActivityLevelPage extends React.Component{
                         flexDirection: 'row'
                     }}>
                 <TouchableHighlight
-                    style={!this.state.isActifSelected ? styles.btnNormal : styles.btnSelected}
-                    onPress={this.pressActif}>
+                    underlayColor="grey"
+                    style={[styles.button, {borderColor: this.state.activeColor}]}
+                    onPress={()=> this.selectActivityLevel(this.levels[2])}>
                     <View>
-                    <Text style={[
-                        styles.titleBtn, {color: this.colorActif}]}>Actif</Text>
-                    <Text
-                        style={{
-                            color: this.colorActif
-                        }}>Les activités quotidiennes nécessitent un effort raisonnable comme la station debout, le travail physique ou l'exercice modéré régulier.</Text>
+                        <Text style={[styles.titleBtn, {color: this.state.activeColor}]}>Actif</Text>
+                        <Text style={{color: this.state.activeColor}}>
+                            Les activités quotidiennes nécessitent un effort raisonnable comme la station debout, le travail physique ou l'exercice modéré régulier.
+                        </Text>
                     </View>
                 </TouchableHighlight>
                 </View>
@@ -193,17 +119,16 @@ class ActivityLevelPage extends React.Component{
                     style={{
                         flexDirection: 'row'
                     }}>
-                <TouchableHighlight
-                    style={!this.state.isSportifSelected ? styles.btnNormal : styles.btnSelected}
-                    onPress={this.pressSportif}>
-                    <View>
-                    <Text style={[
-                        styles.titleBtn, {color: this.colorSportif}]}>Sportif</Text>
-                    <Text
-                        style={{
-                            color: this.colorSportif
-                        }}>Les activités quotidiennes nécessitent un effort physique tel que des travaux de construction ou un exercice vigoureux régulier.</Text>
-                    </View>
+                    <TouchableHighlight
+                        underlayColor="grey"
+                        style={[styles.button, {borderColor: this.state.sportiveColor}]}
+                        onPress={()=> this.selectActivityLevel(this.levels[3])}>
+                        <View>
+                            <Text style={[styles.titleBtn, {color: this.state.sportiveColor}]}>Sportif</Text>
+                            <Text style={{color: this.state.sportiveColor}}>
+                                Les activités quotidiennes nécessitent un effort physique tel que des travaux de construction ou un exercice vigoureux régulier.
+                            </Text>
+                        </View>
                     </TouchableHighlight>
                 </View>
                 <TouchableHighlight
@@ -215,20 +140,14 @@ class ActivityLevelPage extends React.Component{
                         borderRadius: 20
                     }}
                     onPress={() => {
-                        if (this.state.isSedentaireSelected) {
-                            Data.getInstance().updateUser({ activityLevel: 'sedentary' });
-                        } else if (this.state.isFaiblementActifSelected) {
-                            Data.getInstance().updateUser({ activityLevel: 'lowActive' });
-                        } else if (this.state.isActifSelected) {
-                            Data.getInstance().updateUser({ activityLevel: 'active' });
-                        } else if (this.state.isSportifSelected) {
-                            Data.getInstance().updateUser({ activityLevel: 'sportive' });
-                        } else {
+                        if (this.state.activityLevel === '') {
                             Alert.alert('Oups !', "Veuillez entrer votre niveau d'activité");
                             return;
                         }
 
-                        this.props.navigation.navigate('AgePage', {genre:this.props.route.params.genre, weight:this.props.route.params.weight, height:this.props.route.params.height, activityLevel:this.activityLevel})
+                        Data.getInstance().updateUser({ activityLevel: this.state.activityLevel });
+
+                        this.props.navigation.navigate('AgePage');
                     }}>
                     <Text
                         style={{
@@ -251,25 +170,13 @@ var styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20
     },
-    btnNormal: {
+    button: {
        flex: 1,
         marginRight: 10,
         marginTop: 5,
         marginLeft: 10,
         marginBottom: 5,
         padding: 5,
-        borderColor: 'black',
-        borderWidth: 1,
-        borderRadius: 5
-    },
-    btnSelected: {
-        flex: 1,
-        marginRight: 10,
-        marginTop: 5,
-        marginLeft: 10,
-        marginBottom: 5,
-        padding: 5,
-        borderColor: 'green',
         borderWidth: 1,
         borderRadius: 5
     }

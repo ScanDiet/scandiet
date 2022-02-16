@@ -1,9 +1,29 @@
-import {Image, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, View, Button, Pressable} from "react-native";
+import {Image, Text, StyleSheet, TextInput, TouchableHighlight, TouchableOpacity, View, Button, Pressable, Alert} from "react-native";
 import * as React from "react";
+import Data from '../database/data';
 
 const WelcomeScreen = ({ navigation }) => {
+    const [email, onChangeEmail] = React.useState("test");
+    const [password, onChangePassword] = React.useState("test");
+
     function navigateToRoot() {
-        navigation.navigate('Root', {valCal: 0 })
+        console.log(email);
+        if (email.toLowerCase() !== 'test' || password.toLowerCase() !== 'test') {
+            Alert.alert('Oups !', "Identifiants incorrects. Réessayez ou inscrivez-vous.");
+            return;
+        } 
+
+        if ((Data.getInstance().getUser()).activityLevel === '') {
+            Data.getInstance().updateUser({
+                activityLevel: 'sedentary',
+                age: 25,
+                weight: 80,
+                height: 180,
+                sexe: 'male'
+            });
+        }
+        
+        navigation.navigate('Root');
     }
 
     function navigateToCreateAccount() {
@@ -19,10 +39,15 @@ const WelcomeScreen = ({ navigation }) => {
                 <Text style={styles.text}>Email :</Text>
                 <TextInput
                     style={styles.input}
+                    value={email}
+                    onChangeText={onChangeEmail}
                 />
                 <Text style={styles.text}>Password :</Text>
                 <TextInput
+                    secureTextEntry={true}
                     style={styles.input}
+                    value={password}
+                    onChangeText={onChangePassword}
                 />
             </View>
             <View style={styles.footer}>

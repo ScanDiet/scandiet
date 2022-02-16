@@ -5,8 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Data from '../../database/data';
 
-function WeightPage({ route, navigation }){
-    const { genre } = route.params;
+function WeightPage({ navigation }){
     const [number, onChangeNumber] = React.useState(null);
     return (
         <View
@@ -51,7 +50,7 @@ function WeightPage({ route, navigation }){
                     }
                     Data.getInstance().updateUser({ weight: number });
                     
-                    navigation.navigate('HeightPage', {genre: genre, weight: number})
+                    navigation.navigate('HeightPage')
                 }}>
                 <Text
                     style={{color: "white",

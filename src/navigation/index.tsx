@@ -75,8 +75,9 @@ function RootNavigator() {
         <Stack.Screen name="ActivityLevelPage" component={ActivityLevelPage} />
         <Stack.Screen name="AgePage" component={AgePage} />
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-        <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
+        <Stack.Group screenOptions={{ presentation: 'modal'}}>
             <Stack.Screen name="Product" component={ProductScreen} />
+            <Stack.Screen name="Search" component={RechercheScreen} />
         </Stack.Group>
     </Stack.Navigator>
   );
@@ -94,19 +95,10 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Scan"
+      backBehavior='initialRoute'
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
-        <BottomTab.Screen
-            name="Favoris"
-            component={FavorisScreen}
-            options={{
-                title: 'Favoris',
-                tabBarIcon: ({color, size }) => (
-                    <MaterialIcons name="favorite" color={color} size={size}/>
-                ),
-            }}
-        />
         <BottomTab.Screen
             name="Profil"
             component={ProfilScreen}
@@ -121,7 +113,7 @@ function BottomTabNavigator() {
             name="Scan"
             component={ScanScreen}
             options={({ navigation }: RootTabScreenProps<'Scan'>) => ({
-                title: 'Scan',
+                title: 'Scan', 
                 tabBarIcon: ({color, size }) => (
                     <MaterialCommunityIcons name="barcode-scan" color={color} size={size}/>
                 )
@@ -134,16 +126,6 @@ function BottomTabNavigator() {
                 title: 'Journal',
                 tabBarIcon: ({color, size }) => (
                     <MaterialCommunityIcons name="coffee-outline" color={color} size={size}/>
-                ),
-            }}
-        />
-        <BottomTab.Screen
-            name="Recherche"
-            component={RechercheScreen}
-            options={{
-                title: 'Recherche',
-                tabBarIcon: ({color, size }) => (
-                    <IonIcon name="search-outline" color={color} size={size}/>
                 ),
             }}
         />

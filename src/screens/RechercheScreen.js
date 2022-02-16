@@ -26,16 +26,23 @@ class RechercheScreen extends Component {
     render() {
         return (
             <View style={styles.homeContainer}>
+                <Text style={{
+                    textAlign: 'center',
+                    color: 'green',
+                    fontWeight: 'bold',
+                    fontSize: 25
+                }}>
+                    Rechercher un produit manuellement
+                </Text>
                 <TextInput
                     style={styles.searchInput}
-                    placeholder='Code barre'
+                    placeholder="Entrez le nom d'un produit"
                     onChangeText={(text) => this._searchTextInputChanged(text)}
-                    keyboardType='number-pad'
                     clearButtonMode='always'
                 />
                 <ActionButton
                     title="Rechercher"
-                    color="#FFDC32"
+                    color="green"
                     onPress={() => this._searchInfo()}
                 />
             </View>
@@ -54,7 +61,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     searchInput: {
-        marginBottom: 10,
+        marginTop: 20,
+        marginBottom: 20,
         height: 50,
         width: 300,
         borderColor: '#8c8c8c',
