@@ -51,6 +51,10 @@ class ProductScreen extends Component {
         )
     };
 
+    _handleValidate = () => {
+        this.props.navigation.goBack();
+    };
+
     static _parseIngredientWithAllergens(ingredientsWithAllergens) {
         if (!ingredientsWithAllergens) {
             return (<Text style={styles.defaultText}>Non renseigné</Text>)
@@ -143,16 +147,12 @@ class ProductScreen extends Component {
                         {ProductScreen._parseAllergens(product.allergens)}
 
                         <View style={styles.bottomView}>
-                            <TouchableHighlight>
-                                <View style={styles.button}>
-                                    <Text style={styles.buttonLabel}>Annuler</Text>
-                                </View>
+                            <TouchableHighlight style={[styles.button, {backgroundColor: 'red'}]} onPress={()=> this.props.navigation.goBack()}>
+                                <Text style={styles.buttonLabel}>Annuler</Text>
                             </TouchableHighlight>
 
-                            <TouchableHighlight onPress={this._showDialog}>
-                                <View style={styles.button}>
-                                    <Text style={styles.buttonLabel}>Enregistrer</Text>
-                                </View>
+                            <TouchableHighlight style={styles.button} onPress={this._showDialog}>
+                                <Text style={styles.buttonLabel}>Enregistrer</Text>
                             </TouchableHighlight>
                         </View>
 
@@ -171,7 +171,7 @@ class ProductScreen extends Component {
                                 <Picker.Item label="Dîner" value="js" />
                             </Picker>
                             <Dialog.Button label="Annuler" onPress={this._handleCancel}/>
-                            <Dialog.Button label="Valider" onPress={this._handleCancel}/>
+                            <Dialog.Button label="Valider" onPress={this._handleValidate}/>
                         </Dialog.Container>
 
 
@@ -279,24 +279,25 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
     },
     button: {
-        paddingHorizontal: 8,
-        paddingVertical: 6,
-        borderRadius: 4,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 20,
         backgroundColor: "green",
-        alignSelf: "flex-start",
-        marginHorizontal: "1%",
-        marginBottom: 6,
-        minWidth: "48%",
+        alignSelf: 'center',
+        marginHorizontal: "5%",
+        marginTop: 20,
         textAlign: "center",
     },
     buttonLabel: {
-        fontSize: 12,
+        fontSize: 15,
+        textAlign: 'center',
         fontWeight: "500",
         color: "white",
     },
     bottomView: {
         flexDirection: "row",
         flexWrap: "wrap",
+        justifyContent: 'center'
     },
     dialogLabel: {
         margin: 13,

@@ -10,14 +10,15 @@ function ScanScreen({navigation}) {
     const [hasPermission, setHasPermission] = useState(false);
     const [canScan, setCanScan] = useState(undefined);
     const [hideIcons, setHideIcons] = useState(false);
-    const [searchInput, setSearchInput] = useState('');
     const [scanButtonColor, setScanButtonColor] = useState('white');
     const isFocused = useIsFocused();
 
     const handleBarCodeScanned = ({ type, data }) => {
         if (canScan) {
-            navigation.navigate('Product', {barcode: data, update : true});
             setCanScan(false);
+            setHideIcons(false);
+            setScanButtonColor('white');
+            navigation.navigate('Product', {barcode: data, update : true});
         }
     }
 
