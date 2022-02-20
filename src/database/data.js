@@ -1,3 +1,4 @@
+import {element} from "prop-types";
 
 export default class Data {
 
@@ -17,14 +18,48 @@ export default class Data {
         favProducts: []
     };
 
+    productCalories({q, serving_kcal}) {
+        return serving_kcal * q;
+    }
+
+    mealCalories(meal){
+        let val = 0;
+        this.user.products[meal].forEach(element => {
+               val += element.product.nutriments.energy-kcal;
+            }
+        )
+        return val;
+    }
+
+    getTodayCalories() {
+        let cal = 0;
+        /*for (const [key, value] of Object.entries(this.user.products)) {
+            console.log(`${key}: ${value}`);
+            cal += this.mealCalories(key)
+        }*/
+        Object.keys(this.user.products).forEach(element => {
+            cal += this.mealCalories(key);
+        })
+        return cal;
+    }
+
     registerProduct(meal, q, product) {
-        console.log(meal);
-        console.log(q);
-        console.log(product)
         this.user.products[meal].push({
             quantity: q,
             product: product
         })
+    }
+
+    getMealContents(meal) {
+        return this.user.products[meal];
+    }
+
+    registerMeal(_meal) {
+        this.user.products[_meal] = [];
+    }
+
+    getAllMeals(){
+        return Object.keys(this.user.products);
     }
 
     static getInstance() {
@@ -85,7 +120,5 @@ export default class Data {
         return result;
     }
 
-    getTodayCalories() {
-        return 0;
-    }
+
 }

@@ -35,6 +35,7 @@ import ActivityLevelPage from "../screens/inscription/ActivityLevelPage";
 import AgePage from "../screens/inscription/AgePage";
 import HeightPage from "../screens/inscription/HeightPage";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import MealScreen from "../components/Meal";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -78,6 +79,7 @@ function RootNavigator() {
         <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
             <Stack.Screen name="Product" component={ProductScreen} />
             <Stack.Screen name="Recherche" component={RechercheScreen} />
+            <Stack.Screen name="Meal" component={MealScreen} />
         </Stack.Group>
     </Stack.Navigator>
   );
