@@ -2,11 +2,22 @@ import React, {Component} from "react";
 import {View, Text} from "./Themed";
 import Loader from './common/Loader'
 import {StatusBar} from "expo-status-bar";
-import {Platform, ScrollView, Image, StyleSheet, Button, TouchableHighlight, Alert} from "react-native";
+import {
+    Platform,
+    ScrollView,
+    Image,
+    StyleSheet,
+    Button,
+    TouchableHighlight,
+    Alert,
+    TouchableOpacity
+} from "react-native";
 import {Picker} from "@react-native-picker/picker"
 import ErrorScreen from "./common/Error";
 import Dialog from "react-native-dialog";
 import {getProductInfoFromApi, parseProductInfo} from "../api/offApi";
+import Data from "../database/data";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 class ProductScreen extends Component {
 
         constructor(props) {
@@ -16,7 +27,9 @@ class ProductScreen extends Component {
             isLoading: true,
             isConnected: true,
             visible: false,
-            selectedValue: ""
+            selectedValue: "Breakfast",
+            quantity: 0,
+            isFavorite: false
         }
     }
 
@@ -29,12 +42,44 @@ class ProductScreen extends Component {
             .then(data => {
                 this.setState({
                     product: data,
-                    isLoading: false
+                    isLoading: false,
+                    isFavorite: this._isFavorite(data._id)
                 });
             })
             .catch((error) =>
                 this.setState({isConnected: false, isLoading: false})
             );
+
+    }
+
+    _isFavorite(id) {
+            let check = false;
+        Data.getInstance().getAllFavoritesProducts().forEach(element => {
+            if(element._id === id){
+                check = true;
+            }
+        });
+        return check;
+    }
+
+    _favoriteDisplay() {
+        if (this.state.isFavorite){
+            return (
+                <TouchableOpacity onPress={this._handleFavorites}>
+                    <MaterialIcons name="star" color="#F1C40F" size={45}/>
+                </TouchableOpacity>
+            )
+        }
+    }
+
+    _notFavoriteDisplay() {
+            if(!this.state.isFavorite){
+                return (
+                    <TouchableOpacity onPress={this._handleFavorites}>
+                        <MaterialIcons name="star-outline" color="#F1C40F" size={45}/>
+                    </TouchableOpacity>
+                )
+            }
     }
 
     _showDialog = () => {
@@ -51,7 +96,17 @@ class ProductScreen extends Component {
         )
     };
 
+    _handleFavorites = () => {
+        if (this.state.isFavorite){
+            Data.getInstance().removeProductToFavorites(this.state.product);
+        }
+        else {
+            Data.getInstance().addProductToFavorites(this.state.product);
+        }
+    }
+
     _handleValidate = () => {
+        (Data.getInstance()).registerProduct(this.state.selectedValue, this.state.quantity, this.state.product)
         this.props.navigation.goBack();
     };
 
@@ -107,6 +162,13 @@ class ProductScreen extends Component {
         )
     }
 
+    _setQuantityValue(itemValue) {
+        this.setState({
+                quantity: itemValue
+            }
+        )
+    }
+
     _displayProductInfo() {
 
         const {product, isLoading, isConnected} = this.state;
@@ -134,6 +196,8 @@ class ProductScreen extends Component {
                             style={styles.imageNutri}
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
                         />
+                        {this._favoriteDisplay()}
+                        {this._notFavoriteDisplay()}
                         <Text style={styles.titleText}>Catégories</Text>
 
                         <Text
@@ -160,15 +224,15 @@ class ProductScreen extends Component {
 
                             <Dialog.Title>Ajout de produit</Dialog.Title>
                             <Text style={styles.dialogLabel}> Entrer la quantité </Text>
-                            <Dialog.Input placeholder="Quantité (g)"/>
+                            <Dialog.Input value={this.state.quantity} onChangeText={q => this._setQuantityValue(q)} placeholder="Quantité (g)"/>
                             <Picker
                                 style={styles.picker}
                                 selectedValue={this.state.selectedValue}
                                 onValueChange={(itemValue, itemIndex) => this._setSelectedValue(itemValue)}
                             >
-                                <Picker.Item label="Petit Déjeuner" value="java" />
-                                <Picker.Item label="Déjeuner" value="js" />
-                                <Picker.Item label="Dîner" value="js" />
+                                <Picker.Item label="Petit Déjeuner" value="Breakfast" />
+                                <Picker.Item label="Déjeuner" value="Lunch" />
+                                <Picker.Item label="Dîner" value="Dinner" />
                             </Picker>
                             <Dialog.Button label="Annuler" onPress={this._handleCancel}/>
                             <Dialog.Button label="Valider" onPress={this._handleValidate}/>
@@ -200,6 +264,8 @@ class ProductScreen extends Component {
        </View>
    )
    }
+
+
 }
 
 export default ProductScreen;

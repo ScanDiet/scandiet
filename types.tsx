@@ -23,6 +23,7 @@ export type RootStackParamList = {
   AgePage: undefined;
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Product: undefined;
+  Recherche: undefined;
   NotFound: undefined;
 };
 
@@ -36,7 +37,6 @@ export type RootTabParamList = {
   Profil: undefined;
   Scan: undefined;
   Journal: undefined;
-  Recherche: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

@@ -35,11 +35,6 @@ const linking: LinkingOptions<RootStackParamList> = {
               JournalScreen: 'journal',
             },
           },
-          Recherche: {
-            screens: {
-              RechercheScreen: 'recherche',
-            },
-          },
         },
       },
       Product: 'product',

@@ -55,64 +55,64 @@ function ScanScreen({navigation}) {
                 style={{
                     backgroundColor: 'transparent',
                     position:'absolute',
-                    justifyContent: 'center', 
+                    justifyContent: 'center',
                     borderWidth: 3,
                     borderColor: 'white',
                     top: 1,
                     left: 1,
-                    width: 60, 
-                    height: 60, 
-                    marginLeft: 35,
-                    marginTop: 10,
+                    width: 30,
+                    height: 30,
+                    marginLeft: 15,
+                    marginTop: 50,
                     borderRadius: 100
                 }}>
-                    <IonIcon name="search-outline" color={'white'} size={30} style={{
+                    <IonIcon name="search-outline" color={'white'} size={15} style={{
                             alignSelf: 'center',
                             fontWeight: 'bold'
                         }}/>
                 </TouchableHighlight>
             }
 
-            { !hideIcons ? undefined : 
+            { !hideIcons ? undefined :
                 <Text style={{
-                    textAlign: 'center', 
-                    color: 'white', 
+                    textAlign: 'center',
+                    color: 'white',
                     alignSelf: 'center',
-                    position:'absolute', 
+                    position:'absolute',
                     fontWeight: 'bold',
                     top: 1,
-                    marginTop: 30,
+                    marginTop: 50,
                     fontSize: 20
                 }}>
                     Scan en cours...
                 </Text>
             }
 
- 
+
             <TouchableWithoutFeedback
                 onPressIn={() => scanButtonPressed(true)}
                 onPressOut={() => scanButtonPressed(false)}
             >
                 <View style={{
-                    backgroundColor: 'transparent',  
-                    position:'absolute', 
-                    alignSelf: 'center', 
+                    backgroundColor: 'transparent',
+                    position:'absolute',
+                    alignSelf: 'center',
                     justifyContent: 'center',
-                    bottom: 1, 
-                    marginBottom: 30, 
-                    padding: 10, 
-                    width: 100, 
-                    height: 100, 
-                    borderColor: scanButtonColor, 
-                    borderWidth: 5, 
+                    bottom: 1,
+                    marginBottom: 30,
+                    padding: 10,
+                    width: 70,
+                    height: 70,
+                    borderColor: scanButtonColor,
+                    borderWidth: 5,
                     borderRadius: 100
                 }} >
                     <Text style={{
-                        textAlign: 'center', 
-                        color: 'white', 
+                        textAlign: 'center',
+                        color: 'white',
                         alignSelf: 'center',
                         fontWeight: 'bold'
-                    }}>Maintenir</Text>
+                    }}>Scan</Text>
                 </View>
             </TouchableWithoutFeedback>
 

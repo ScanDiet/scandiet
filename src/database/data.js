@@ -1,14 +1,31 @@
+
 export default class Data {
 
-    static instance = null;
+    static instance = null
 
     user = {
         activityLevel: '',
         age: 0,
         weight: 0,
         height: 0,
-        sexe: ''
+        sexe: '',
+        products: {
+            'Breakfast': [],
+            'Lunch': [],
+            'Dinner': []
+        },
+        favProducts: []
     };
+
+    registerProduct(meal, q, product) {
+        console.log(meal);
+        console.log(q);
+        console.log(product)
+        this.user.products[meal].push({
+            quantity: q,
+            product: product
+        })
+    }
 
     static getInstance() {
         if (Data.instance == null) {
@@ -20,6 +37,18 @@ export default class Data {
 
     getUser() {
         return this.user;
+    }
+
+    getAllFavoritesProducts() {
+        return this.user.favProducts;
+    }
+
+    addProductToFavorites(product) {
+        this.user.favProducts.push(product);
+    }
+
+    removeProductToFavorites(product) {
+        this.user.favProducts.filter(p => {return p !== product});
     }
 
     /**

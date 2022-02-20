@@ -75,9 +75,9 @@ function RootNavigator() {
         <Stack.Screen name="ActivityLevelPage" component={ActivityLevelPage} />
         <Stack.Screen name="AgePage" component={AgePage} />
         <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-        <Stack.Group screenOptions={{ presentation: 'modal'}}>
+        <Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
             <Stack.Screen name="Product" component={ProductScreen} />
-            <Stack.Screen name="Search" component={RechercheScreen} />
+            <Stack.Screen name="Recherche" component={RechercheScreen} />
         </Stack.Group>
     </Stack.Navigator>
   );
@@ -100,6 +100,16 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
         <BottomTab.Screen
+            name="Favoris"
+            component={FavorisScreen}
+            options={{
+                title: 'Favoris',
+                tabBarIcon: ({color, size }) => (
+                    <MaterialIcons name="favorite" color={color} size={size}/>
+                ),
+            }}
+        />
+        <BottomTab.Screen
             name="Profil"
             component={ProfilScreen}
             options={{
@@ -112,12 +122,13 @@ function BottomTabNavigator() {
         <BottomTab.Screen
             name="Scan"
             component={ScanScreen}
-            options={({ navigation }: RootTabScreenProps<'Scan'>) => ({
-                title: 'Scan', 
+            options={{
+                headerShown: false,
+                title: 'Scan',
                 tabBarIcon: ({color, size }) => (
                     <MaterialCommunityIcons name="barcode-scan" color={color} size={size}/>
                 )
-            })}
+            }}
         />
         <BottomTab.Screen
             name="Journal"

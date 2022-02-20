@@ -4,10 +4,11 @@ import PageIndicator from "./PageIndicator";
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Data from '../../database/data';
+import {_storeData} from "../../services/UserService";
 
 function AgePage({ navigation }){
     const [number, onChangeNumber] = React.useState(null);
-    
+
     return (
         <View
             style={{
@@ -54,7 +55,9 @@ function AgePage({ navigation }){
                     }
 
                     Data.getInstance().updateUser({ age: number });
-                    
+                    _storeData(Data.getInstance().getUser()).then(r => {
+                        console.log("SAVED");
+                    });
                     navigation.navigate('Root');
                 }}>
                 <Text
