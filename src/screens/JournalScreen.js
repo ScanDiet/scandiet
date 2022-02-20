@@ -6,6 +6,14 @@ import MacrosScreen from "./diary/MacrosScreen";
 import NutrimentsScreen from "./diary/NutrimentsScreen";
 import DatePicker from 'react-native-datepicker';
 import { NavigationContainer } from '@react-navigation/native';
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+  } from "react-native-chart-kit";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -25,7 +33,7 @@ const JournalScreen = () => {
                             minDate="01-01-2020"
                             maxDate="21-02-2022"
                             confirmBtnText="Confirm"
-                            cancelBtnText="Cancel"
+                            cancelBtnText="Annuler"
                             customStyles={{
                                 dateIcon: {
                                     //display: 'none',
@@ -41,7 +49,7 @@ const JournalScreen = () => {
                                 },
                             }}
                             onDateChange={(date) => {
-                                setDate(date);
+                                console.log("test");
                             }}
                         />
                     </View>
@@ -54,9 +62,8 @@ const JournalScreen = () => {
                                     backgroundColor: 'white',
                                 },
                             }}>
+                            <Tab.Screen name="Poids" component={MacrosScreen} />
                             <Tab.Screen name="Calories" component={CaloriesScreen} />
-                            <Tab.Screen name="Macros" component={MacrosScreen} />
-                            <Tab.Screen name="Nutriments" component={NutrimentsScreen} />
                         </Tab.Navigator>
 
 
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'green',
         alignItems: "center",
         justifyContent: "center",
-        flex: 1
+        flex: 1,
     },
     container: {
         flex: 1
