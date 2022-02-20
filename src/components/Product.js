@@ -28,7 +28,7 @@ class ProductScreen extends Component {
             isConnected: true,
             visible: false,
             selectedValue: "Breakfast",
-            quantity: 0,
+            quantity: "",
             isFavorite: false
         }
     }
@@ -99,9 +99,19 @@ class ProductScreen extends Component {
     _handleFavorites = () => {
         if (this.state.isFavorite){
             Data.getInstance().removeProductToFavorites(this.state.product);
+            this.setState(
+                {
+                    isFavorite: false
+                }
+            )
         }
         else {
             Data.getInstance().addProductToFavorites(this.state.product);
+            this.setState(
+                {
+                    isFavorite: true
+                }
+            )
         }
     }
 

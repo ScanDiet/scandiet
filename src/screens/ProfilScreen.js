@@ -14,7 +14,7 @@ const Item = ({meal, onPress}) => (
     <View style={styles.main_container}>
         <View style={styles.content_view}>
             <Text style={styles.text}>{meal}</Text>
-            <Text> Vous n'avez pas encore renseigné d'aliments</Text>
+            <Text> {Data.getInstance().mealCalories(meal)} kcal</Text>
         </View>
         <View style={styles.icon_view}>
             <TouchableOpacity onPress={onPress}>
@@ -51,6 +51,7 @@ class ProfilScreen extends Component {
         )
 
     }
+
 
     _showDialog = () => {
         this.setState({
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
             height: 50,
             alignItems: 'center',
             justifyContent: 'center',
-            right: 25,
+            right: 20,
             bottom: 25,
             backgroundColor: 'green',
             borderRadius: 30

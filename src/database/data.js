@@ -24,10 +24,12 @@ export default class Data {
 
     mealCalories(meal){
         let val = 0;
-        this.user.products[meal].forEach(element => {
-               val += element.product.nutriments.energy-kcal;
-            }
-        )
+        if(this.user.products[meal]){
+            this.user.products[meal].forEach(element => {
+                    val += element.product.nutriments["energy-kcal"];
+                }
+            )
+        }
         return val;
     }
 
@@ -118,7 +120,7 @@ export default class Data {
             case 'sedentary':
                 result = Math.round(result*1.2);
         }
-
+        if(result < 0) result = 2166;
         return result;
     }
 

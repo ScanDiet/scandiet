@@ -12,7 +12,7 @@ const Item = ({product, onPress}) => (
     <View style={styles.main_container}>
         <View style={styles.content_view}>
             <Text style={styles.text}>{product.product_name ? product.product_name : "Nom inconnu"}</Text>
-            <Text style={{fontSize: 16}}>  46 kcal</Text>
+            <Text style={{fontSize: 16}}>  {product.nutriments["energy-kcal"]} kcal</Text>
         </View>
         <View style={styles.icon_view}>
             <TouchableOpacity onPress={onPress}>
@@ -94,7 +94,7 @@ class MealScreen extends Component {
                         {this.state.meal}
                     </Text>
                     <Text>
-                        0 kcal
+                        {Data.getInstance().mealCalories(this.state.meal)} kcal
                     </Text>
                 </View>
                 <View style={styles.content}>
