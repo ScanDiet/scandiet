@@ -38,9 +38,11 @@ export default class Data {
             cal += this.mealCalories(key)
         }*/
         Object.keys(this.user.products).forEach(element => {
-            cal += this.mealCalories(key);
+            cal += this.mealCalories(element);
         })
+        console.log(cal);
         return cal;
+
     }
 
     registerProduct(meal, q, product) {
