@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import ProgressCircle from 'react-native-progress-circle'
 import {
     FlatList, StyleSheet,
@@ -36,7 +36,6 @@ const Item = ({meal, onPress}) => (
 
     </View>
 )
-
 class ProfilScreen extends Component {
 
 
@@ -49,6 +48,7 @@ class ProfilScreen extends Component {
             meals: [],
             visible: false,
             newMeal: '',
+            reload: false
         }
     }
 
@@ -90,6 +90,12 @@ class ProfilScreen extends Component {
         this._handleCancel();
     };
 
+    _reload = () => {
+        this.setState({
+            reload: !this.state.reload
+        })
+    }
+
 
 
 
@@ -111,7 +117,7 @@ class ProfilScreen extends Component {
                 <View style={styles.header_container}>
                     <View style={{marginTop: 30}}>
                         <ProgressCircle
-                            percent={10}
+                            percent={this.state.percentage}
                             radius={90}
                             borderWidth={3}
                             color="green"
@@ -124,7 +130,7 @@ class ProfilScreen extends Component {
                         </ProgressCircle>
                     </View>
 
-                    <Text style={styles.main_text}>Mes repas de la journée</Text>
+                    <Text style={styles.main_text}>Mes repas de la journée </Text>
                 </View>
                 <View style={styles.flat_container}>
                     <FlatList

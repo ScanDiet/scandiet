@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, {Component, useState} from "react";
 import {View, Text} from "./Themed";
 import Loader from './common/Loader'
 import {StatusBar} from "expo-status-bar";
@@ -19,6 +19,7 @@ import {getProductInfoFromApi, parseProductInfo} from "../api/offApi";
 import Data from "../database/data";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+
 class ProductScreen extends Component {
 
         constructor(props) {
