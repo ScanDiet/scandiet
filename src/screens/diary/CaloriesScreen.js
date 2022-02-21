@@ -12,8 +12,9 @@ import {
 class CaloriesScreen extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-        }
+        
+        console.log(props);
+        this.state = props.extraData;
     }
 
     render() {
@@ -25,8 +26,8 @@ class CaloriesScreen extends Component {
                     datasets: [
                         {
                         data: [
-                            1000 + Math.random() * 200,
-                            1000 + Math.random() * 200,
+                            this.state.cal1,
+                            this.state.cal2,
                         ]
                         }
                     ]
@@ -61,9 +62,9 @@ class CaloriesScreen extends Component {
 
                 <FlatList 
                     data={[
-                        {key: "Petit Déjeuner", percent: "23%", cals: "230kcal"},
-                        {key: "Déjeuner", percent: "64%", cals: "550kcal"},
-                        {key: "Diner", percent: "100%", cals: "610kcal"},
+                        {key: "Petit Déjeuner", percent: this.state.calP1, cals: this.state.calPk1},
+                        {key: "Déjeuner", percent: this.state.calP2, cals: this.state.calPk2},
+                        {key: "Diner", percent: this.state.calP3, cals: this.state.calPk3},
                     ]}
                     renderItem={({item}) => 
                         <View style={{borderWidth: 1, flexDirection: "row", alignContent:"center", justifyContent: 'space-between', paddingVertical: 20, paddingHorizontal: 10, margin: 4, borderRadius: 3, borderColor: "green"}}>
