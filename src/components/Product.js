@@ -18,6 +18,7 @@ import Dialog from "react-native-dialog";
 import {getProductInfoFromApi, parseProductInfo} from "../api/offApi";
 import Data from "../database/data";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 class ProductScreen extends Component {
 
         constructor(props) {
@@ -65,7 +66,7 @@ class ProductScreen extends Component {
     _favoriteDisplay() {
         if (this.state.isFavorite){
             return (
-                <TouchableOpacity onPress={this._handleFavorites}>
+                <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={this._handleFavorites}>
                     <MaterialIcons name="star" color="#F1C40F" size={45}/>
                 </TouchableOpacity>
             )
@@ -75,7 +76,7 @@ class ProductScreen extends Component {
     _notFavoriteDisplay() {
             if(!this.state.isFavorite){
                 return (
-                    <TouchableOpacity onPress={this._handleFavorites}>
+                    <TouchableOpacity style={{flex: 1, justifyContent: 'center', alignItems: 'center'}} onPress={this._handleFavorites}>
                         <MaterialIcons name="star-outline" color="#F1C40F" size={45}/>
                     </TouchableOpacity>
                 )
@@ -179,6 +180,12 @@ class ProductScreen extends Component {
         )
     }
 
+    _isBio(v) {
+        console.log(v)
+        if (v === 0) return 'OUI'
+        else return 'NON'
+    }
+
     _displayProductInfo() {
 
         const {product, isLoading, isConnected} = this.state;
@@ -187,39 +194,70 @@ class ProductScreen extends Component {
             if (product && Object.keys(product).length > 0) {
                 return (
                     <ScrollView style={styles.scrollviewContainer}>
-                        <View style={styles.headerContainer}>
+                        <View style={styles.cont_1}>
                             <Image
                                 style={styles.imageProduct}
                                 source={product.image_url ? {uri: product.image_url} : require('../../assets/images/no-images-placeholder.png')}
                             />
-                            <View style={styles.headerDescription}>
+                        </View>
+                        <View style={styles.cont_2}>
+                            <View>
                                 <Text
                                     style={styles.productNameText}>{product.product_name ? product.product_name : "Nom inconnu"}</Text>
                                 <Text style={styles.defaultText}>Quantité
                                     : {product.quantity ? product.quantity : "Non renseignée"}</Text>
                                 <Text style={styles.defaultText}>Marque
                                     : {product.brands ? product.brands.split(",").map(m => m.trim()).join(", ") : "Non renseignée"}</Text>
-                                <Text style={styles.descriptionText}>Code barre : {product._id}</Text>
                             </View>
+                            {this._favoriteDisplay()}
+                            {this._notFavoriteDisplay()}
                         </View>
                         <Image
                             style={styles.imageNutri}
                             source={{uri: 'https://static.openfoodfacts.org/images/misc/nutriscore-' + product.nutrition_grades + '.png'}}
                         />
-                        {this._favoriteDisplay()}
-                        {this._notFavoriteDisplay()}
-                        <Text style={styles.titleText}>Catégories</Text>
+                        <View style={styles.cont_3}>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <Image
+                                    style={styles.fakeIcon}
+                                    source={require('../../assets/images/bio.png')}
+                                />
+                                <Text style={{fontSize: 15}}> Bio : OUI</Text>
+                            </View>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <Image
+                                    style={styles.fakeIcon}
+                                    source={require('../../assets/images/vegetarien.png')}
+                                />
+                                <Text style={{fontSize: 15}}> Végétarien : OUI </Text>
+                            </View>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <Image
+                                    style={styles.fakeIcon}
+                                    source={require('../../assets/images/calories.png')}
+                                />
+                                <Text style={{fontSize: 15}}> Calorie : {product.nutriments["energy-kcal"]} </Text>
+                            </View>
+                        </View>
+                        <View style={styles.cont_4}>
+                            <Text style={styles.titleText}>Ingrédients</Text>
 
-                        <Text
-                            style={styles.defaultText}>{product.categories ? product.categories : "Non renseigné"}
-                        </Text>
+                            {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
 
-                        <Text style={styles.titleText}>Ingrédients</Text>
-
-                        {ProductScreen._parseIngredientWithAllergens(product.ingredients)}
-
-                        {ProductScreen._parseAllergens(product.allergens)}
-
+                            {ProductScreen._parseAllergens(product.allergens)}
+                        </View>
                         <View style={styles.bottomView}>
                             <TouchableHighlight style={[styles.button, {backgroundColor: 'red'}]} onPress={()=> this.props.navigation.goBack()}>
                                 <Text style={styles.buttonLabel}>Annuler</Text>
@@ -229,7 +267,6 @@ class ProductScreen extends Component {
                                 <Text style={styles.buttonLabel}>Enregistrer</Text>
                             </TouchableHighlight>
                         </View>
-
                         <Dialog.Container visible={this.state.visible}>
 
                             <Dialog.Title>Ajout de produit</Dialog.Title>
@@ -281,10 +318,11 @@ class ProductScreen extends Component {
 export default ProductScreen;
 
 const styles = StyleSheet.create({
+    header: {
+
+    },
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
     },
     title: {
         fontSize: 20,
@@ -297,15 +335,15 @@ const styles = StyleSheet.create({
     },
     scrollviewContainer: {
         flex: 1,
-        flexDirection: "column"
+        marginTop: 20
     },
     headerContainer: {
+        flex: 1,
         flexDirection: "row",
     },
     imageProduct: {
-        flex: 1,
-        margin: 5,
-        resizeMode: 'contain',
+        height: 200,
+        resizeMode: "contain",
     },
     imageNutri: {
         height: 80,
@@ -318,14 +356,15 @@ const styles = StyleSheet.create({
     },
     productNameText: {
         fontWeight: 'bold',
-        fontSize: 30,
+        fontSize: 22,
         flexWrap: 'wrap',
         marginLeft: 5,
         marginRight: 5,
         marginTop: 10,
         marginBottom: 10,
         color: '#000000',
-        textAlign: 'left'
+        textAlign: 'left',
+        flex: 6
     },
     titleText: {
         fontWeight: 'bold',
@@ -371,6 +410,7 @@ const styles = StyleSheet.create({
         color: "white",
     },
     bottomView: {
+        marginTop: 20,
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: 'center'
@@ -381,7 +421,28 @@ const styles = StyleSheet.create({
     },
     picker: {
 
+    },
+    cont_1: {
+    },
+    cont_2: {
+        padding: 10,
+        marginTop: 20,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+    },
+    cont_3: {
+
+    },
+    cont_4: {
+        padding: 10
+    },
+    fakeIcon: {
+        width: 30,
+        height: 30,
+        resizeMode: "contain"
     }
+
 });
 
 

@@ -1,6 +1,6 @@
 import {View, Text} from "./Themed";
 import React, {Component} from "react";
-import {FlatList, StyleSheet, TouchableOpacity} from "react-native";
+import {FlatList, Image, StyleSheet, TouchableOpacity} from "react-native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import IonIcon from "react-native-vector-icons/Ionicons";
 import Data from "../database/data";
@@ -10,16 +10,13 @@ import {FloatingAction} from "react-native-floating-action";
 
 const Item = ({product, onPress}) => (
     <View style={styles.main_container}>
+        <Image style={styles.image2} source={product.image_url ? {uri: product.image_url} : require('../../assets/images/no-images-placeholder.png')}/>
         <View style={styles.content_view}>
             <Text style={styles.text}>{product.product_name ? product.product_name : "Nom inconnu"}</Text>
-            <Text style={{fontSize: 16}}>  {product.nutriments["energy-kcal"]} kcal</Text>
+            <Text style={{fontSize:14,
+                flex:1,
+                color:"#3399ff"}}>  {product.nutriments["energy-kcal"]} kcal</Text>
         </View>
-        <View style={styles.icon_view}>
-            <TouchableOpacity onPress={onPress}>
-                <Feather name="edit" size={25}/>
-            </TouchableOpacity>
-        </View>
-
     </View>
 )
 
@@ -87,13 +84,26 @@ class MealScreen extends Component {
                 color: 'green'
             },
         ];
+        const data =  {
+            "Breakfast": require('../../assets/images/breakfast.png'),
+            "Lunch": require('../../assets/images/fried-rice.png'),
+            "Dinner": require('../../assets/images/dinner.png'),
+        }
+
+        const frdata = {
+            "Breakfast": "Petit Déjeuner",
+            "Lunch": "Déjeuner",
+            "Dinner": "Dîner",
+        }
         return (
+
             <View style={styles.container}>
                 <View style={styles.header}>
+                    <Image style={styles.image} source={data[this.state.meal] ? data[this.state.meal] : require('../../assets/images/lunch-box.png')}/>
                     <Text style={styles.title}>
-                        {this.state.meal}
+                        {frdata[this.state.meal]}
                     </Text>
-                    <Text>
+                    <Text style={{color: '#3399ff'}}>
                         {Data.getInstance().mealCalories(this.state.meal)} kcal
                     </Text>
                 </View>
@@ -120,20 +130,48 @@ class MealScreen extends Component {
 export default MealScreen;
 
 const styles = StyleSheet.create({
+    image2: {
+        width:60,
+        height:60,
+        borderRadius:45,
+        borderWidth:2,
+        borderColor:"#ebf0f7",
+        alignSelf: "center"
+    },
+    image: {
+        width:100,
+        height:100,
+        borderRadius:45,
+        borderWidth:2,
+        borderColor:"#ebf0f7"
+    },
     main_container: {
-        flex: 1,
-        flexDirection: "row",
-        height: 70,
-        borderWidth: 2,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingLeft: 10
+        shadowColor: '#000000',
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
+
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop:20,
+        backgroundColor:"white",
+        padding: 10,
+        flexDirection:'row',
+        borderRadius:20,
     },
     content_view: {
         flex: 5,
+        marginLeft: 20
     },
     text: {
-        fontSize : 20
+        marginTop: 5,
+        fontSize:17,
+        flex:1,
+        color:"green",
     },
     icon_view: {
         flex: 1,
@@ -149,7 +187,9 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        fontSize: 30
+        fontSize: 30,
+        color:"green",
+        marginTop: 10
     },
     content: {
         flex: 2,

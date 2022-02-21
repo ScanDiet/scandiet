@@ -9,12 +9,24 @@ import Data from '../database/data';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Dialog from "react-native-dialog";
 import Feather from "react-native-vector-icons/Feather";
+const data =  {
+    "Breakfast": require('../../assets/images/breakfast.png'),
+    "Lunch": require('../../assets/images/fried-rice.png'),
+    "Dinner": require('../../assets/images/dinner.png'),
+}
+const frdata = {
+    "Breakfast": "Petit Déjeuner",
+    "Lunch": "Déjeuner",
+    "Dinner": "Dîner",
+}
+
 
 const Item = ({meal, onPress}) => (
-    <View style={styles.main_container}>
+    <View style={styles.card}>
+        <Image style={styles.image} source={data[meal] ? data[meal] : require('../../assets/images/lunch-box.png')}/>
         <View style={styles.content_view}>
-            <Text style={styles.text}>{meal}</Text>
-            <Text> {Data.getInstance().mealCalories(meal)} kcal</Text>
+            <Text style={styles.text}>{frdata[meal]}</Text>
+            <Text style={styles.count}> {Data.getInstance().mealCalories(meal)} kcal</Text>
         </View>
         <View style={styles.icon_view}>
             <TouchableOpacity onPress={onPress}>
@@ -93,23 +105,25 @@ class ProfilScreen extends Component {
         }
         return (
             <View style={{
-                backgroundColor: 'white',
+                backgroundColor:"#ffffff",
                 flex: 1,
             }}>
                 <View style={styles.header_container}>
-                    <ProgressCircle
-                        percent={this.state.percentage}
-                        radius={90}
-                        borderWidth={8}
-                        color="green"
-                        shadowColor="#999"
-                        bgColor="#fff"
-                        style={{
-                            marginTop: 50,
-                        }}
-                    >
-                        <Text style={{ fontSize: 18, textAlign:'center' }}>{this.state.todayCals} / {this.state.baseCals}kcal</Text>
-                    </ProgressCircle>
+                    <View style={{marginTop: 30}}>
+                        <ProgressCircle
+                            percent={10}
+                            radius={90}
+                            borderWidth={3}
+                            color="green"
+                            shadowColor="#FFFFFF"
+                            bgColor="#fff"
+                            style={{
+                            }}
+                        >
+                            <Text style={{ fontSize: 18, textAlign:'center', color: 'green', fontWeight: 'bold'}}>{this.state.todayCals} / {this.state.baseCals}kcal</Text>
+                        </ProgressCircle>
+                    </View>
+
                     <Text style={styles.main_text}>Mes repas de la journée</Text>
                 </View>
                 <View style={styles.flat_container}>
@@ -146,10 +160,22 @@ class ProfilScreen extends Component {
 export default ProfilScreen;
 
 const styles = StyleSheet.create({
+    image: {
+            width:60,
+            height:60,
+            borderRadius:45,
+            borderWidth:2,
+            borderColor:"#ebf0f7"
+    },
     header_container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    count: {
+        fontSize:14,
+        flex:1,
+        color:"#3399ff"
     },
     main_container: {
         height: 70,
@@ -157,17 +183,43 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         flexDirection: "row"
     },
+    card:{
+        shadowColor: 'green',
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
+
+        marginLeft: 20,
+        marginRight: 20,
+        marginTop:20,
+        backgroundColor:"white",
+        padding: 10,
+        flexDirection:'row',
+        borderRadius:20,
+    },
     text: {
-        fontSize: 30
+        marginTop: 5,
+        fontSize:23,
+        flex:1,
+        color:"green",
+        // fontWeight:'bold'
     },
     main_text: {
-        fontSize: 25
+        marginTop: 15,
+        fontSize: 23,
+
     },
     flat_container: {
-        flex: 2
+        flex: 2,
+        marginTop: 15,
     },
     content_view: {
-        flex: 4
+        flex: 4,
+        marginLeft: 15
     },
     icon_view: {
         flex: 1,

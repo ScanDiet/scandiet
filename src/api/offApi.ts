@@ -27,6 +27,7 @@ export function parseProductInfo(json: { status: number; code: string | any[]; p
             nova_group: jsonProduct.nova_group,
             allergens_ids: jsonProduct.allergens_tags,
             nutriments: jsonProduct.nutriments,
+            vegan: jsonProduct.vegan,
             nutrients_levels: jsonProduct.nutrients_levels,
             nutriscore_data: jsonProduct.nutriscore_data
         };
